@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語 — Aprenda Japonês</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Noto+Serif+JP:wght@400;700&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0d;
+    --paper: #faf8f4;
+    --washi: #f0ebe0;
+    --red: #c0392b;
+    --red-light: #e74c3c;
+    --gold: #c9a84c;
+    --gold-light: #f0c96e;
+    --teal: #1a7f7f;
+    --teal-light: #26a69a;
+    --gray: #7a7570;
+    --border: #d8d0c0;
+    --shadow: rgba(0,0,0,0.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--red);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+  }
+  .logo-kanji {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.5rem;
+    color: var(--red);
+  }
+  .header-nav {
+    display: flex;
+    gap: 0.3rem;
+  }
+  .nav-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    background: rgba(255,255,255,0.1);
+    color: white;
+  }
+  .nav-btn.active { color: var(--gold); }
+  .streak {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* ─── LAYOUT ─── */
+  .app {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  /* ─── SCREENS ─── */
+  .screen { display: none; animation: fadeIn 0.35s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ─── DASHBOARD ─── */
+  .greeting {
+    margin-bottom: 2rem;
+  }
+  .greeting h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .greeting h1 span { color: var(--red); }
+  .greeting p { color: var(--gray); margin-top: 0.4rem; font-size: 0.95rem; }
+
+  .progress-banner {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    gap: 1rem;
+  }
+  .progress-banner-text h2 { font-size: 1.1rem; font-weight: 600; }
+  .progress-banner-text p { font-size: 0.85rem; color: #aaa; margin-top: 0.2rem; }
+  .progress-bar-wrap {
+    flex: 1;
+    max-width: 300px;
+    background: rgba(255,255,255,0.1);
+    height: 10px;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    width: 38%;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    border-radius: 99px;
+    transition: width 1s ease;
+  }
+  .progress-label { font-size: 0.85rem; color: var(--gold); font-weight: 600; }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+  }
+  .stat-card.red::before { background: var(--red); }
+  .stat-card.gold::before { background: var(--gold); }
+  .stat-card.teal::before { background: var(--teal); }
+  .stat-card.dark::before { background: var(--ink); }
+  .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px var(--shadow); }
+  .stat-card .icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+  .stat-card .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray); font-weight: 600; }
+  .stat-card .value { font-size: 1.8rem; font-weight: 800; line-height: 1; margin: 0.2rem 0; }
+  .stat-card .sub { font-size: 0.78rem; color: var(--gray); }
+
+  .daily-flow {
+    background: var(--washi);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+  }
+  .daily-flow h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: 0.02em; }
+  .flow-steps {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .flow-step {
+    flex: 1;
+    min-width: 110px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.8rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .flow-step:hover { border-color: var(--red); }
+  .flow-step.done { background: var(--ink); border-color: var(--ink); color: white; }
+  .flow-step .step-icon { font-size: 1.3rem; }
+  .flow-step .step-name { font-size: 0.7rem; font-weight: 600; margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .flow-step .step-time { font-size: 0.65rem; color: var(--gray); }
+  .flow-step.done .step-time { color: #aaa; }
+
+  .quick-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .action-btn {
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 1.2rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    letter-spacing: 0.02em;
+  }
+  .action-btn:hover { background: var(--red-light); transform: translateY(-2px); }
+  .action-btn.secondary { background: var(--ink); }
+  .action-btn.secondary:hover { background: #333; }
+  .action-btn span.btn-icon { font-size: 1.4rem; }
+
+  /* ─── SRS SCREEN ─── */
+  .srs-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  .srs-header h2 { font-size: 1.3rem; font-weight: 700; }
+  .srs-count { font-size: 0.85rem; color: var(--gray); }
+
+  .flashcard-wrap {
+    perspective: 1200px;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+  .flashcard {
+    width: 100%;
+    min-height: 280px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+    cursor: pointer;
+  }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .card-face {
+    position: absolute;
+    width: 100%;
+    min-height: 280px;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border: 2px solid var(--border);
+  }
+  .card-front { background: white; }
+  .card-back { background: var(--ink); color: white; transform: rotateY(180deg); }
+  .card-japanese {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 3.5rem;
+    color: var(--ink);
+    line-height: 1.2;
+    text-align: center;
+  }
+  .card-furigana {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.85rem;
+    color: var(--gray);
+    margin-top: 0.3rem;
+    text-align: center;
+  }
+  .card-type-badge {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: var(--washi);
+    color: var(--gray);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 99px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .card-hint { font-size: 0.8rem; color: var(--gray); margin-top: 1rem; }
+  .card-translation {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .card-sentence {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.9rem;
+    color: #ccc;
+    text-align: center;
+    line-height: 1.8;
+    margin-top: 0.5rem;
+  }
+  .card-audio-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 99px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s;
+  }
+  .card-audio-btn:hover { background: rgba(255,255,255,0.2); }
+
+  .rating-btns {
+    display: flex;
+    gap: 0.8rem;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+  .rating-btn {
+    flex: 1;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  .rating-btn:hover { transform: translateY(-2px); }
+  .rating-btn.again { background: #fde8e8; color: #c0392b; }
+  .rating-btn.hard { background: #fef3cd; color: #8a6000; }
+  .rating-btn.good { background: #d4edda; color: #1a6e2e; }
+  .rating-btn.easy { background: #cce5ff; color: #004085; }
+
+  /* ─── SENTENÇAS ─── */
+  .sentence-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
+  }
+  .sentence-main {
+    padding: 2.5rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .sentence-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 2.2rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .sentence-jp .highlight {
+    background: linear-gradient(0deg, rgba(192,57,43,0.15) 0%, rgba(192,57,43,0) 100%);
+    border-bottom: 2px solid var(--red);
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+  .sentence-furigana {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-top: 0.5rem;
+  }
+  .sentence-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background: var(--washi);
+  }
+  .ctrl-btn {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--ink);
+  }
+  .ctrl-btn:hover { background: var(--ink); color: white; border-color: var(--ink); }
+  .ctrl-btn.play { background: var(--red); color: white; border-color: var(--red); font-size: 1.1rem; padding: 0.5rem 1.3rem; }
+  .ctrl-btn.play:hover { background: var(--red-light); }
+
+  .sentence-info {
+    padding: 1.5rem 2rem;
+  }
+  .translation-toggle {
+    background: none;
+    border: none;
+    color: var(--teal);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .translation-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    display: none;
+  }
+  .translation-text.visible { display: block; }
+  .grammar-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .grammar-tag {
+    background: var(--washi);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--gray);
+    letter-spacing: 0.04em;
+  }
+  .grammar-tag.new { background: #fde8e8; border-color: #f5c6cb; color: var(--red); }
+
+  .sentence-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .snav-btn {
+    background: var(--ink);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.8rem 2rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .snav-btn:hover { opacity: 0.85; }
+  .snav-btn.outline { background: none; border: 2px solid var(--border); color: var(--ink); }
+  .snav-btn.outline:hover { border-color: var(--ink); }
+  .sentence-counter { font-size: 0.85rem; color: var(--gray); }
+
+  /* ─── KANJI ─── */
+  .kanji-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .kanji-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .kanji-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px var(--shadow); border-color: var(--red); }
+  .kanji-char {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 3rem;
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.7rem;
+  }
+  .kanji-meaning { font-size: 0.8rem; font-weight: 700; color: var(--ink); }
+  .kanji-reading { font-family: 'Noto Sans JP', sans-serif; font-size: 0.7rem; color: var(--gray); margin-top: 0.2rem; }
+  .kanji-level {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 99px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .kanji-level.n5 { background: #d4edda; color: #1a6e2e; }
+  .kanji-level.n4 { background: #cce5ff; color: #004085; }
+  .kanji-level.n3 { background: #fef3cd; color: #8a6000; }
+
+  /* ─── SHADOWING ─── */
+  .shadowing-area {
+    max-width: 650px;
+    margin: 0 auto;
+  }
+  .shadow-card {
+    background: var(--ink);
+    color: white;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .shadow-card::after {
+    content: '影';
+    position: absolute;
+    bottom: -20px; right: 10px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 8rem;
+    color: rgba(255,255,255,0.03);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .shadow-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 2rem;
+    line-height: 1.8;
+    margin-bottom: 0.5rem;
+  }
+  .shadow-romaji { font-size: 0.85rem; color: #aaa; margin-bottom: 1rem; }
+  .shadow-translation { font-size: 1rem; color: #ddd; }
+  .waveform {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    margin: 1.5rem 0;
+  }
+  .wave-bar {
+    width: 4px;
+    background: var(--red);
+    border-radius: 99px;
+    animation: wave 1.2s ease-in-out infinite;
+    opacity: 0.5;
+  }
+  .wave-bar.active { opacity: 1; }
+  @keyframes wave {
+    0%, 100% { height: 6px; }
+    50% { height: 28px; }
+  }
+  .shadow-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  .shadow-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    border-radius: 12px;
+    padding: 0.8rem 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .shadow-btn:hover { background: rgba(255,255,255,0.2); }
+  .shadow-btn.record { background: var(--red); border-color: var(--red); }
+  .shadow-btn.record.recording { background: #e74c3c; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  .shadow-feedback {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: none;
+  }
+  .shadow-feedback.visible { display: block; }
+  .feedback-metric {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+  }
+  .feedback-metric-name { font-size: 0.85rem; font-weight: 600; }
+  .feedback-bar-wrap { flex: 1; margin: 0 1rem; height: 8px; background: var(--washi); border-radius: 99px; overflow: hidden; }
+  .feedback-bar-fill { height: 100%; border-radius: 99px; }
+  .feedback-score { font-size: 0.85rem; font-weight: 700; }
+
+  /* ─── IMERSÃO ─── */
+  .immersion-scene {
+    background: var(--ink);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .scene-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .scene-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+  .scene-name { color: white; font-size: 0.9rem; font-weight: 600; }
+  .scene-status { color: #aaa; font-size: 0.75rem; }
+  .scene-status-dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    background: #2ecc71;
+    border-radius: 50%;
+    margin-right: 0.3rem;
+  }
+  .chat-area {
+    padding: 1.5rem;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .message {
+    display: flex;
+    gap: 0.8rem;
+    animation: msgIn 0.3s ease;
+  }
+  @keyframes msgIn { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:translateY(0);} }
+  .message.user { flex-direction: row-reverse; }
+  .msg-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  .message.user .msg-avatar { background: var(--teal); }
+  .msg-bubble {
+    max-width: 70%;
+    background: rgba(255,255,255,0.08);
+    border-radius: 14px 14px 14px 4px;
+    padding: 0.8rem 1rem;
+  }
+  .message.user .msg-bubble {
+    background: var(--teal);
+    border-radius: 14px 14px 4px 14px;
+  }
+  .msg-jp { font-family: 'Noto Sans JP', sans-serif; font-size: 0.9rem; color: white; line-height: 1.6; }
+  .msg-pt { font-size: 0.72rem; color: #999; margin-top: 0.3rem; }
+  .message.user .msg-pt { color: rgba(255,255,255,0.6); }
+  .reply-options {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .reply-opt {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    border-radius: 99px;
+    padding: 0.45rem 1rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .reply-opt:hover { background: var(--red); border-color: var(--red); }
+
+  /* ─── SECTION TITLE ─── */
+  .section-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+  .section-title h2 { font-size: 1.3rem; font-weight: 800; }
+  .section-title .sub { font-size: 0.85rem; color: var(--gray); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 600px) {
+    header { padding: 0 1rem; }
+    .app { padding: 1rem; }
+    .progress-banner { flex-direction: column; align-items: flex-start; }
+    .quick-actions { grid-template-columns: 1fr; }
+    .rating-btns { flex-wrap: wrap; }
+    .kanji-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-kanji">日</span>
+    NihonGo
+  </div>
+  <nav class="header-nav">
+    <button class="nav-btn active" onclick="showScreen('dashboard')">Início</button>
+    <button class="nav-btn" onclick="showScreen('srs')">SRS</button>
+    <button class="nav-btn" onclick="showScreen('sentences')">Sentenças</button>
+    <button class="nav-btn" onclick="showScreen('kanji')">Kanji</button>
+    <button class="nav-btn" onclick="showScreen('shadow')">Shadowing</button>
+    <button class="nav-btn" onclick="showScreen('immersion')">Imersão</button>
+  </nav>
+  <div class="streak">🔥 7 dias</div>
+</header>
+
+<div class="app">
+
+  <!-- DASHBOARD -->
+  <div id="screen-dashboard" class="screen active">
+    <div class="greeting">
+      <h1>Bom dia! <span>Vamos estudar?</span></h1>
+      <p>Você está no nível N5 — Iniciante Avançado</p>
+    </div>
+
+    <div class="progress-banner">
+      <div class="progress-banner-text">
+        <h2>Progresso — N5</h2>
+        <p>38% concluído · 243 itens aprendidos</p>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="mainProgress"></div>
+      </div>
+      <div class="progress-label">38%</div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="stat-card red" onclick="showScreen('srs')">
+        <div class="icon">🃏</div>
+        <div class="label">Revisão SRS</div>
+        <div class="value">24</div>
+        <div class="sub">cartões pendentes</div>
+      </div>
+      <div class="stat-card gold" onclick="showScreen('sentences')">
+        <div class="icon">文</div>
+        <div class="label">Novas Sentenças</div>
+        <div class="value">5</div>
+        <div class="sub">para hoje</div>
+      </div>
+      <div class="stat-card teal" onclick="showScreen('kanji')">
+        <div class="icon">漢</div>
+        <div class="label">Kanji</div>
+        <div class="value">89</div>
+        <div class="sub">aprendidos</div>
+      </div>
+      <div class="stat-card dark" onclick="showScreen('shadow')">
+        <div class="icon">🎙</div>
+        <div class="label">Shadowing</div>
+        <div class="value">73%</div>
+        <div class="sub">precisão média</div>
+      </div>
+    </div>
+
+    <div class="daily-flow">
+      <h3>Sessão de hoje — ~45 minutos</h3>
+      <div class="flow-steps">
+        <div class="flow-step done" onclick="showScreen('srs')">
+          <div class="step-icon">✅</div>
+          <div class="step-name">SRS</div>
+          <div class="step-time">10 min</div>
+        </div>
+        <div class="flow-step" onclick="showScreen('sentences')">
+          <div class="step-icon">📖</div>
+          <div class="step-name">Sentenças</div>
+          <div class="step-time">15 min</div>
+        </div>
+        <div class="flow-step" onclick="showScreen('sentences')">
+          <div class="step-icon">👂</div>
+          <div class="step-name">Listening</div>
+          <div class="step-time">10 min</div>
+        </div>
+        <div class="flow-step" onclick="showScreen('shadow')">
+          <div class="step-icon">🎙</div>
+          <div class="step-name">Shadowing</div>
+          <div class="step-time">5 min</div>
+        </div>
+        <div class="flow-step" onclick="showScreen('immersion')">
+          <div class="step-icon">🌸</div>
+          <div class="step-name">Imersão</div>
+          <div class="step-time">10 min</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <button class="action-btn" onclick="showScreen('srs')">
+        <span class="btn-icon">🃏</span>
+        Revisar cartões (24)
+      </button>
+      <button class="action-btn secondary" onclick="showScreen('immersion')">
+        <span class="btn-icon">💬</span>
+        Praticar conversação
+      </button>
+    </div>
+  </div>
+
+  <!-- SRS -->
+  <div id="screen-srs" class="screen">
+    <div class="srs-header">
+      <h2>Repetição Espaçada</h2>
+      <div class="srs-count" id="srsCount">Cartão 1 de 24</div>
+    </div>
+
+    <div class="flashcard-wrap">
+      <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="card-face card-front">
+          <div class="card-type-badge" id="cardType">Sentença</div>
+          <div class="card-japanese" id="cardJapanese">食べます</div>
+          <div class="card-furigana" id="cardFurigana">たべます</div>
+          <div class="card-hint">Clique para ver a resposta</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-type-badge" style="background:rgba(255,255,255,0.1);color:#ddd;">Resposta</div>
+          <div class="card-translation" id="cardTranslation">comer (forma educada)</div>
+          <div class="card-sentence" id="cardSentence">毎日ご飯を<strong style="color:white">食べます</strong>。<br><small style="color:#999">Eu como arroz todo dia.</small></div>
+          <button class="card-audio-btn" onclick="playAudio(event)">🔊 Ouvir áudio</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="rating-btns" id="ratingBtns" style="display:none;">
+      <button class="rating-btn again" onclick="nextCard('again')">😣 Errei</button>
+      <button class="rating-btn hard" onclick="nextCard('hard')">😓 Difícil</button>
+      <button class="rating-btn good" onclick="nextCard('good')">😊 Fácil</button>
+      <button class="rating-btn easy" onclick="nextCard('easy')">😄 Muito fácil</button>
+    </div>
+  </div>
+
+  <!-- SENTENÇAS -->
+  <div id="screen-sentences" class="screen">
+    <div class="section-title">
+      <h2>Aprendizado por Sentenças</h2>
+      <span class="sub">Método i+1</span>
+    </div>
+
+    <div class="sentence-card">
+      <div class="sentence-main">
+        <div class="sentence-jp" id="sentenceJP">
+          図書館で本を<span class="highlight">借ります</span>。
+        </div>
+        <div class="sentence-furigana" id="sentenceFuri">としょかん で ほん を かります</div>
+      </div>
+      <div class="sentence-controls">
+        <button class="ctrl-btn">🐢 0.75×</button>
+        <button class="ctrl-btn play">▶ Ouvir</button>
+        <button class="ctrl-btn">🔁 Repetir</button>
+        <button class="ctrl-btn">🎙 Shadowing</button>
+      </div>
+      <div class="sentence-info">
+        <button class="translation-toggle" onclick="toggleTranslation()">
+          <span id="toggleIcon">👁</span> <span id="toggleText">Ver tradução</span>
+        </button>
+        <div class="translation-text" id="translationText">
+          Eu pego emprestado livros na biblioteca.
+        </div>
+        <div class="grammar-tags">
+          <span class="grammar-tag">で — partícula de local</span>
+          <span class="grammar-tag">を — objeto direto</span>
+          <span class="grammar-tag new">★ NOVO: 借ります — pegar emprestado</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sentence-nav">
+      <button class="snav-btn outline" onclick="prevSentence()">← Anterior</button>
+      <span class="sentence-counter" id="sentenceCounter">Sentença 3 de 15</span>
+      <button class="snav-btn" onclick="nextSentence()">Próxima →</button>
+    </div>
+  </div>
+
+  <!-- KANJI -->
+  <div id="screen-kanji" class="screen">
+    <div class="section-title">
+      <h2>Kanji</h2>
+      <span class="sub">N5 — 89 / 103 aprendidos</span>
+    </div>
+    <div class="kanji-grid" id="kanjiGrid"></div>
+  </div>
+
+  <!-- SHADOWING -->
+  <div id="screen-shadow" class="screen">
+    <div class="section-title">
+      <h2>Shadowing</h2>
+      <span class="sub">Ouça e repita</span>
+    </div>
+    <div class="shadowing-area">
+      <div class="shadow-card">
+        <div class="shadow-jp">東京はとても大きい都市です。</div>
+        <div class="shadow-romaji">Tōkyō wa totemo ōkii toshi desu.</div>
+        <div class="shadow-translation">Tóquio é uma cidade muito grande.</div>
+        <div class="waveform" id="waveform"></div>
+        <div class="shadow-controls">
+          <button class="shadow-btn" onclick="playShadow()">▶ Ouvir</button>
+          <button class="shadow-btn" id="slowBtn" onclick="slowAudio()">🐢 Lento</button>
+          <button class="shadow-btn record" id="recordBtn" onclick="toggleRecord()">🎙 Gravar</button>
+        </div>
+      </div>
+      <div class="shadow-feedback" id="shadowFeedback">
+        <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:1rem;">📊 Análise da sua pronúncia</h3>
+        <div class="feedback-metric">
+          <span class="feedback-metric-name">Ritmo</span>
+          <div class="feedback-bar-wrap"><div class="feedback-bar-fill" style="width:78%;background:var(--teal);"></div></div>
+          <span class="feedback-score" style="color:var(--teal)">78%</span>
+        </div>
+        <div class="feedback-metric">
+          <span class="feedback-metric-name">Entonação</span>
+          <div class="feedback-bar-wrap"><div class="feedback-bar-fill" style="width:65%;background:var(--gold);"></div></div>
+          <span class="feedback-score" style="color:var(--gold)">65%</span>
+        </div>
+        <div class="feedback-metric">
+          <span class="feedback-metric-name">Fluidez</span>
+          <div class="feedback-bar-wrap"><div class="feedback-bar-fill" style="width:82%;background:var(--teal);"></div></div>
+          <span class="feedback-score" style="color:var(--teal)">82%</span>
+        </div>
+        <p style="font-size:0.8rem;color:var(--gray);margin-top:0.8rem;">💡 Dica: preste atenção no pitch de 都市 (toshi)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMERSÃO -->
+  <div id="screen-immersion" class="screen">
+    <div class="section-title">
+      <h2>Imersão</h2>
+      <span class="sub">Conversa simulada</span>
+    </div>
+    <div class="immersion-scene">
+      <div class="scene-header">
+        <div class="scene-avatar">🏪</div>
+        <div>
+          <div class="scene-name">Tanaka-san — Konbini</div>
+          <div class="scene-status"><span class="scene-status-dot"></span>Situação: você está em um combini</div>
+        </div>
+      </div>
+      <div class="chat-area" id="chatArea">
+        <div class="message">
+          <div class="msg-avatar">🏪</div>
+          <div class="msg-bubble">
+            <div class="msg-jp">いらっしゃいませ！</div>
+            <div class="msg-pt">Bem-vindo(a)!</div>
+          </div>
+        </div>
+        <div class="message">
+          <div class="msg-avatar">🏪</div>
+          <div class="msg-bubble">
+            <div class="msg-jp">何かお探しですか？</div>
+            <div class="msg-pt">Está procurando alguma coisa?</div>
+          </div>
+        </div>
+      </div>
+      <div class="reply-options" id="replyOptions">
+        <div class="reply-opt" onclick="sendReply(this, 'お弁当はどこですか？', 'Onde ficam os bentô?')">お弁当はどこですか？</div>
+        <div class="reply-opt" onclick="sendReply(this, 'トイレはどこですか？', 'Onde fica o banheiro?')">トイレはどこですか？</div>
+        <div class="reply-opt" onclick="sendReply(this, 'これをください。', 'Quero isso, por favor.')">これをください。</div>
+        <div class="reply-opt" onclick="sendReply(this, 'ありがとうございます！', 'Obrigado(a)!')">ありがとうございます！</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── NAV ──
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const map = {dashboard:0,srs:1,sentences:2,kanji:3,shadow:4,immersion:5};
+  document.querySelectorAll('.nav-btn')[map[name]]?.classList.add('active');
+}
+
+// ── SRS ──
+const srsCards = [
+  {type:'Palavra', jp:'食べます', furi:'たべます', translation:'comer (forma educada)', sentence:'毎日ご飯を<strong style="color:white">食べます</strong>。<br><small style="color:#999">Eu como arroz todo dia.</small>'},
+  {type:'Sentença', jp:'どこへ行きますか？', furi:'どこへ いきますか', translation:'Para onde você vai?', sentence:'<strong style="color:white">どこへ行きますか？</strong><br><small style="color:#999">Pergunta de destino</small>'},
+  {type:'Kanji', jp:'水', furi:'みず / すい', translation:'água', sentence:'冷たい<strong style="color:white">水</strong>が飲みたい。<br><small style="color:#999">Quero beber água gelada.</small>'},
+  {type:'Áudio', jp:'🔊 ___', furi:'(ouça o áudio)', translation:'私は学生です。', sentence:'<strong style="color:white">私は学生です。</strong><br><small style="color:#999">Eu sou estudante.</small>'},
+];
+let currentCard = 0;
+let flipped = false;
+
+function flipCard() {
+  const card = document.getElementById('flashcard');
+  flipped = !flipped;
+  card.classList.toggle('flipped', flipped);
+  document.getElementById('ratingBtns').style.display = flipped ? 'flex' : 'none';
+}
+
+function nextCard(rating) {
+  currentCard = (currentCard + 1) % srsCards.length;
+  const c = srsCards[currentCard];
+  document.getElementById('cardType').textContent = c.type;
+  document.getElementById('cardJapanese').textContent = c.jp;
+  document.getElementById('cardFurigana').textContent = c.furi;
+  document.getElementById('cardTranslation').textContent = c.translation;
+  document.getElementById('cardSentence').innerHTML = c.sentence;
+  const card = document.getElementById('flashcard');
+  card.classList.remove('flipped');
+  flipped = false;
+  document.getElementById('ratingBtns').style.display = 'none';
+  document.getElementById('srsCount').textContent = `Cartão ${currentCard+1} de 24`;
+}
+
+function playAudio(e) {
+  e.stopPropagation();
+  const btn = e.currentTarget;
+  btn.textContent = '⏸ Reproduzindo...';
+  setTimeout(() => { btn.innerHTML = '🔊 Ouvir áudio'; }, 1500);
+}
+
+// ── SENTENÇAS ──
+const sentences = [
+  {jp:'図書館で本を<span class="highlight">借ります</span>。', furi:'としょかん で ほん を かります', pt:'Eu pego emprestado livros na biblioteca.', tags:['で — partícula de local','を — objeto direto','★ NOVO: 借ります — pegar emprestado']},
+  {jp:'毎朝コーヒーを<span class="highlight">飲みます</span>。', furi:'まいあさ コーヒー を のみます', pt:'Eu bebo café toda manhã.', tags:['毎朝 — toda manhã','を — objeto direto','飲みます — beber']},
+  {jp:'友達と映画を<span class="highlight">見ました</span>。', furi:'ともだち と えいが を みました', pt:'Assisti a um filme com um amigo.', tags:['と — junto com','★ NOVO: 見ました — vi (passado)','映画 — filme']},
+];
+let sentIdx = 2;
+
+function updateSentence() {
+  const s = sentences[sentIdx];
+  document.getElementById('sentenceJP').innerHTML = s.jp;
+  document.getElementById('sentenceFuri').textContent = s.furi;
+  document.getElementById('translationText').textContent = s.pt;
+  document.getElementById('translationText').classList.remove('visible');
+  document.getElementById('toggleText').textContent = 'Ver tradução';
+  document.querySelector('.grammar-tags').innerHTML = s.tags.map(
+    (t,i) => `<span class="grammar-tag ${t.startsWith('★')?'new':''}">${t}</span>`
+  ).join('');
+  document.getElementById('sentenceCounter').textContent = `Sentença ${sentIdx+1} de 15`;
+}
+function nextSentence() { sentIdx = (sentIdx+1) % sentences.length; updateSentence(); }
+function prevSentence() { sentIdx = (sentIdx-1+sentences.length) % sentences.length; updateSentence(); }
+
+function toggleTranslation() {
+  const t = document.getElementById('translationText');
+  const visible = t.classList.toggle('visible');
+  document.getElementById('toggleText').textContent = visible ? 'Ocultar tradução' : 'Ver tradução';
+}
+
+// ── KANJI ──
+const kanjiData = [
+  {ch:'日',m:'sol / dia',r:'ひ / にち',lvl:'n5'},
+  {ch:'月',m:'lua / mês',r:'つき / げつ',lvl:'n5'},
+  {ch:'山',m:'montanha',r:'やま / さん',lvl:'n5'},
+  {ch:'川',m:'rio',r:'かわ / せん',lvl:'n5'},
+  {ch:'人',m:'pessoa',r:'ひと / じん',lvl:'n5'},
+  {ch:'大',m:'grande',r:'おお / だい',lvl:'n5'},
+  {ch:'小',m:'pequeno',r:'ちい / しょう',lvl:'n5'},
+  {ch:'中',m:'meio / dentro',r:'なか / ちゅう',lvl:'n5'},
+  {ch:'上',m:'cima',r:'うえ / じょう',lvl:'n5'},
+  {ch:'下',m:'baixo',r:'した / か',lvl:'n5'},
+  {ch:'本',m:'livro / origem',r:'ほん / もと',lvl:'n5'},
+  {ch:'水',m:'água',r:'みず / すい',lvl:'n5'},
+  {ch:'火',m:'fogo',r:'ひ / か',lvl:'n5'},
+  {ch:'木',m:'árvore',r:'き / もく',lvl:'n5'},
+  {ch:'金',m:'ouro / dinheiro',r:'きん / かね',lvl:'n5'},
+  {ch:'土',m:'terra',r:'つち / ど',lvl:'n5'},
+  {ch:'学',m:'estudo',r:'がく / まな',lvl:'n5'},
+  {ch:'生',m:'vida / nascer',r:'せい / なま',lvl:'n5'},
+  {ch:'先',m:'antes / frente',r:'さき / せん',lvl:'n5'},
+  {ch:'語',m:'língua / palavra',r:'ご / かた',lvl:'n4'},
+  {ch:'時',m:'tempo / hora',r:'とき / じ',lvl:'n5'},
+  {ch:'間',m:'intervalo / entre',r:'あいだ / かん',lvl:'n4'},
+  {ch:'電',m:'eletricidade',r:'でん',lvl:'n5'},
+  {ch:'車',m:'veículo / carro',r:'くるま / しゃ',lvl:'n5'},
+];
+function buildKanji() {
+  const grid = document.getElementById('kanjiGrid');
+  grid.innerHTML = kanjiData.map(k => `
+    <div class="kanji-card">
+      <span class="kanji-char">${k.ch}</span>
+      <div class="kanji-meaning">${k.m}</div>
+      <div class="kanji-reading">${k.r}</div>
+      <span class="kanji-level ${k.lvl}">${k.lvl.toUpperCase()}</span>
+    </div>
+  `).join('');
+}
+buildKanji();
+
+// ── WAVEFORM ──
+function buildWaveform() {
+  const w = document.getElementById('waveform');
+  for (let i = 0; i < 28; i++) {
+    const bar = document.createElement('div');
+    bar.className = 'wave-bar';
+    bar.style.animationDelay = (i * 0.05) + 's';
+    bar.style.height = (6 + Math.random() * 22) + 'px';
+    w.appendChild(bar);
+  }
+}
+buildWaveform();
+
+let recording = false;
+function toggleRecord() {
+  recording = !recording;
+  const btn = document.getElementById('recordBtn');
+  btn.classList.toggle('recording', recording);
+  btn.textContent = recording ? '⏹ Parar' : '🎙 Gravar';
+  if (!recording) {
+    setTimeout(() => {
+      document.getElementById('shadowFeedback').classList.add('visible');
+    }, 400);
+  } else {
+    document.getElementById('shadowFeedback').classList.remove('visible');
+  }
+}
+function playShadow() {
+  const bars = document.querySelectorAll('.wave-bar');
+  bars.forEach(b => b.classList.add('active'));
+  setTimeout(() => bars.forEach(b => b.classList.remove('active')), 2000);
+}
+function slowAudio() {
+  const btn = document.getElementById('slowBtn');
+  btn.style.background = 'rgba(201,168,76,0.2)';
+  btn.style.borderColor = 'var(--gold)';
+  btn.style.color = 'var(--gold)';
+  setTimeout(() => {
+    btn.style.background = '';
+    btn.style.borderColor = '';
+    btn.style.color = '';
+  }, 1500);
+}
+
+// ── IMERSÃO ──
+const responses = [
+  {jp:'お弁当は右の棚にありますよ！', pt:'Os bentô estão na prateleira à direita!'},
+  {jp:'トイレはあそこにあります。', pt:'O banheiro está ali.'},
+  {jp:'はい、ありがとうございます。', pt:'Sim, obrigado(a).'},
+  {jp:'またいらっしゃいませ！', pt:'Até a próxima!'},
+];
+let replyCount = 0;
+function sendReply(el, jp, pt) {
+  const chat = document.getElementById('chatArea');
+  // user msg
+  const userMsg = document.createElement('div');
+  userMsg.className = 'message user';
+  userMsg.innerHTML = `<div class="msg-avatar">😊</div><div class="msg-bubble"><div class="msg-jp">${jp}</div><div class="msg-pt">${pt}</div></div>`;
+  chat.appendChild(userMsg);
+  chat.scrollTop = chat.scrollHeight;
+  // NPC response
+  setTimeout(() => {
+    const r = responses[replyCount % responses.length];
+    replyCount++;
+    const npcMsg = document.createElement('div');
+    npcMsg.className = 'message';
+    npcMsg.innerHTML = `<div class="msg-avatar">🏪</div><div class="msg-bubble"><div class="msg-jp">${r.jp}</div><div class="msg-pt">${r.pt}</div></div>`;
+    chat.appendChild(npcMsg);
+    chat.scrollTop = chat.scrollHeight;
+  }, 800);
+}
+</script>
+</body>
+</html>
